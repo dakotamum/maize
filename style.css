@@ -1,0 +1,7 @@
+.maze {
+  position: absolute;
+}
+.player {
+  position: absolute;
+  background-color: transparent;
+}
