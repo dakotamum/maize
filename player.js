@@ -16,31 +16,85 @@ class Player {
     this.goingRight = false;
     this.row = 0;
     this.col = 0;
+    this.velocity = 0.005;
+    this.distToGo = cellSize;
+    this.isMoving = false;
   }
   update(delta) {
     if (this.goingUp) {
-      this.goingUp = false;
-      if (!newMaze.grid[this.row][this.col].walls.topWall) {
-        this.y -= cellSize;
-        this.row -= 1;
+      if (!newMaze.grid[this.row][this.col].walls.topWall && !this.isMoving) {
+        this.isMoving = true;
+      } else if (newMaze.grid[this.row][this.col].walls.topWall) {
+        this.goingUp = false;
+      }
+      if (this.isMoving) {
+        let goDist = Math.min(cellSize * this.velocity * delta, this.distToGo);
+        this.distToGo = this.distToGo - goDist;
+        if (this.distToGo == 0.0) {
+          this.isMoving = false;
+          this.goingUp = false;
+          this.distToGo = cellSize;
+          console.log(this.isMoving);
+          this.row -= 1;
+        }
+        this.y -= goDist;
       }
     } else if (this.goingDown) {
-      this.goingDown = false;
-      if (!newMaze.grid[this.row][this.col].walls.bottomWall) {
-        this.y += cellSize;
-        this.row += 1;
+      if (
+        !newMaze.grid[this.row][this.col].walls.bottomWall &&
+        !this.isMoving
+      ) {
+        this.isMoving = true;
+      } else if (newMaze.grid[this.row][this.col].walls.bottomWall) {
+        this.goingDown = false;
+      }
+      if (this.isMoving) {
+        let goDist = Math.min(cellSize * this.velocity * delta, this.distToGo);
+        this.distToGo = this.distToGo - goDist;
+        if (this.distToGo == 0.0) {
+          this.isMoving = false;
+          this.goingDown = false;
+          this.distToGo = cellSize;
+          console.log(this.isMoving);
+          this.row += 1;
+        }
+        this.y += goDist;
       }
     } else if (this.goingLeft) {
-      this.goingLeft = false;
-      if (!newMaze.grid[this.row][this.col].walls.leftWall) {
-        this.x -= cellSize;
-        this.col -= 1;
+      if (!newMaze.grid[this.row][this.col].walls.leftWall && !this.isMoving) {
+        this.isMoving = true;
+      } else if (newMaze.grid[this.row][this.col].walls.leftWall) {
+        this.goingLeft = false;
+      }
+      if (this.isMoving) {
+        let goDist = Math.min(cellSize * this.velocity * delta, this.distToGo);
+        this.distToGo = this.distToGo - goDist;
+        if (this.distToGo == 0.0) {
+          this.isMoving = false;
+          this.goingLeft = false;
+          this.distToGo = cellSize;
+          console.log(this.isMoving);
+          this.col -= 1;
+        }
+        this.x -= goDist;
       }
     } else if (this.goingRight) {
-      this.goingRight = false;
-      if (!newMaze.grid[this.row][this.col].walls.rightWall) {
-        this.x += cellSize;
-        this.col += 1;
+      if (!newMaze.grid[this.row][this.col].walls.rightWall && !this.isMoving) {
+        this.isMoving = true;
+      } else if (newMaze.grid[this.row][this.col].walls.rightWall) {
+        this.goingRight = false;
+      }
+      if (this.isMoving) {
+        let goDist = Math.min(cellSize * this.velocity * delta, this.distToGo);
+        this.distToGo = this.distToGo - goDist;
+        if (this.distToGo == 0.0) {
+          this.isMoving = false;
+          this.goingRight = false;
+          this.distToGo = cellSize;
+          console.log(this.isMoving);
+          this.col += 1;
+        }
+        this.x += goDist;
       }
     }
   }
@@ -52,17 +106,20 @@ class Player {
     ctx.fill();
   }
   keydownHandler(event) {
-    if (event.key === "w") {
-      this.goingUp = true;
-    }
-    if (event.key === "s") {
-      this.goingDown = true;
-    }
-    if (event.key === "a") {
-      this.goingLeft = true;
-    }
-    if (event.key === "d") {
-      this.goingRight = true;
+    if (!this.isMoving) {
+      console.log("yo homi!");
+      if (event.key === "w") {
+        this.goingUp = true;
+      }
+      if (event.key === "s") {
+        this.goingDown = true;
+      }
+      if (event.key === "a") {
+        this.goingLeft = true;
+      }
+      if (event.key === "d") {
+        this.goingRight = true;
+      }
     }
   }
 }
