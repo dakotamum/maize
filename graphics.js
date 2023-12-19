@@ -1,6 +1,35 @@
 MazeGame.graphics = (function () {
   //////////////////////////////////////////////////////// MAZE FUNCTIONS ///////////////////////////////////////////////////////
 
+  // Wall drawing functions for each cell. Will be called if relevent wall is set to true in cell constructor
+  function drawTopWall(x, y, size, columns, rows) {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + size / columns, y);
+    ctx.stroke();
+  }
+
+  function drawRightWall(x, y, size, columns, rows) {
+    ctx.beginPath();
+    ctx.moveTo(x + size / columns, y);
+    ctx.lineTo(x + size / columns, y + size / rows);
+    ctx.stroke();
+  }
+
+  function drawBottomWall(x, y, size, columns, rows) {
+    ctx.beginPath();
+    ctx.moveTo(x, y + size / rows);
+    ctx.lineTo(x + size / columns, y + size / rows);
+    ctx.stroke();
+  }
+
+  function drawLeftWall(x, y, size, columns, rows) {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x, y + size / rows);
+    ctx.stroke();
+  }
+
   // Draws each of the cells on the maze canvas
   function drawMaze(maze) {
     // Initialize the canvas
@@ -14,31 +43,13 @@ MazeGame.graphics = (function () {
         ctx.fillStyle = "black";
         ctx.lineWidth = 2;
         if (maze.grid[r][c].walls.topWall)
-          maze.grid[r][c].drawTopWall(x, y, maze.size, maze.columns, maze.rows);
+          drawTopWall(x, y, maze.size, maze.columns, maze.rows);
         if (maze.grid[r][c].walls.rightWall)
-          maze.grid[r][c].drawRightWall(
-            x,
-            y,
-            maze.size,
-            maze.columns,
-            maze.rows
-          );
+          drawRightWall(x, y, maze.size, maze.columns, maze.rows, ctx);
         if (maze.grid[r][c].walls.bottomWall)
-          maze.grid[r][c].drawBottomWall(
-            x,
-            y,
-            maze.size,
-            maze.columns,
-            maze.rows
-          );
+          drawBottomWall(x, y, maze.size, maze.columns, maze.rows);
         if (maze.grid[r][c].walls.leftWall)
-          maze.grid[r][c].drawLeftWall(
-            x,
-            y,
-            maze.size,
-            maze.columns,
-            maze.rows
-          );
+          drawLeftWall(x, y, maze.size, maze.columns, maze.rows);
         if (maze.grid[r][c].goal) {
           ctx.fillStyle = "rgb(83, 247, 43)";
           ctx.fillRect(
