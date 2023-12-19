@@ -13,7 +13,7 @@ MazeGame.main = (function (graphics) {
 
   let lastFrameTime = performance.now();
 
-  let maze = new Maze(500, 32, 32);
+  let maze = new Maze(500, 10, 10);
   maze.initialize();
   let cellSize = Math.floor(maze.size / maze.rows);
   let player = new Player(
