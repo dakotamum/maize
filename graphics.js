@@ -1,6 +1,7 @@
 MazeGame.graphics = (function () {
   //////////////////////////////////////////////////////// MAZE FUNCTIONS ///////////////////////////////////////////////////////
-
+  const mazeCanvas = document.getElementById("maze-canvas");
+  const playerCanvas = document.getElementById("player-canvas");
   // Wall drawing functions for each cell. Will be called if relevent wall is set to true in cell constructor
   function drawTopWall(x, y, size, columns, rows) {
     ctx.beginPath();
@@ -33,7 +34,6 @@ MazeGame.graphics = (function () {
   // Draws each of the cells on the maze canvas
   function drawMaze(maze) {
     // Initialize the canvas
-    let mazeCanvas = document.getElementById("maze-canvas");
     let ctx = mazeCanvas.getContext("2d");
     for (let r = 0; r < maze.rows; r++) {
       for (let c = 0; c < maze.columns; c++) {
@@ -66,12 +66,11 @@ MazeGame.graphics = (function () {
   ////////////////////////////////////////////////////////// PLAYER FUNCTIONS ////////////////////////////////////////////////////////
 
   function drawPlayer(player) {
-    const canvas = document.getElementById("player-canvas");
-    ctx = canvas.getContext("2d");
+    ctx = playerCanvas.getContext("2d");
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    playerCanvas.width = window.innerWidth;
+    playerCanvas.height = window.innerHeight;
+    ctx.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
     ctx.beginPath(); // begin drawing on screen
     ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2, false);
     ctx.fillStyle = player.color;
