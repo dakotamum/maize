@@ -1,7 +1,7 @@
-.maze {
+.maze-canvas {
   position: absolute;
 }
-.player {
+.player-canvas {
   position: absolute;
   background-color: transparent;
 }

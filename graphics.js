@@ -4,7 +4,7 @@ MazeGame.graphics = (function () {
   // Draws each of the cells on the maze canvas
   function drawMaze(maze) {
     // Initialize the canvas
-    let mazeCanvas = document.querySelector(".maze");
+    let mazeCanvas = document.getElementById("maze-canvas");
     let ctx = mazeCanvas.getContext("2d");
     for (let r = 0; r < maze.rows; r++) {
       for (let c = 0; c < maze.columns; c++) {
@@ -16,14 +16,37 @@ MazeGame.graphics = (function () {
         if (maze.grid[r][c].walls.topWall)
           maze.grid[r][c].drawTopWall(x, y, maze.size, maze.columns, maze.rows);
         if (maze.grid[r][c].walls.rightWall)
-          maze.grid[r][c].drawRightWall(x, y, maze.size, maze.columns, maze.rows);
+          maze.grid[r][c].drawRightWall(
+            x,
+            y,
+            maze.size,
+            maze.columns,
+            maze.rows
+          );
         if (maze.grid[r][c].walls.bottomWall)
-          maze.grid[r][c].drawBottomWall(x, y, maze.size, maze.columns, maze.rows);
+          maze.grid[r][c].drawBottomWall(
+            x,
+            y,
+            maze.size,
+            maze.columns,
+            maze.rows
+          );
         if (maze.grid[r][c].walls.leftWall)
-          maze.grid[r][c].drawLeftWall(x, y, maze.size, maze.columns, maze.rows);
+          maze.grid[r][c].drawLeftWall(
+            x,
+            y,
+            maze.size,
+            maze.columns,
+            maze.rows
+          );
         if (maze.grid[r][c].goal) {
           ctx.fillStyle = "rgb(83, 247, 43)";
-          ctx.fillRect(x + 1, y + 1, maze.size / maze.columns - 2, maze.size / maze.rows - 2);
+          ctx.fillRect(
+            x + 1,
+            y + 1,
+            maze.size / maze.columns - 2,
+            maze.size / maze.rows - 2
+          );
         }
       }
     }
@@ -32,7 +55,7 @@ MazeGame.graphics = (function () {
   ////////////////////////////////////////////////////////// PLAYER FUNCTIONS ////////////////////////////////////////////////////////
 
   function drawPlayer(player) {
-    const canvas = document.querySelector(".player");
+    const canvas = document.getElementById("player-canvas");
     ctx = canvas.getContext("2d");
 
     canvas.width = window.innerWidth;
