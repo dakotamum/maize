@@ -1,7 +1,8 @@
 .maze-canvas {
   position: absolute;
+  z-index: 0;
 }
 .player-canvas {
   position: absolute;
-  background-color: transparent;
+  z-index: 1;
 }
