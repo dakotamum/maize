@@ -27,7 +27,6 @@ MazeGame.main = (function (graphics) {
 
   function render() {
     graphics.drawPlayer(player);
-    graphics.drawMaze(maze);
   }
 
   function update(delta) {
@@ -44,7 +43,6 @@ MazeGame.main = (function (graphics) {
   }
 
   start.initialize = function () {
-    graphics.drawPlayer(player);
     graphics.drawMaze(maze);
     requestAnimationFrame(gameLoop);
   };

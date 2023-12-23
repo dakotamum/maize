@@ -1,58 +1,53 @@
 MazeGame.graphics = (function () {
   //////////////////////////////////////////////////////// MAZE FUNCTIONS ///////////////////////////////////////////////////////
-  const mazeCanvas = document.getElementById("maze-canvas");
-  const playerCanvas = document.getElementById("player-canvas");
+  // const playerCanvas = document.getElementById("player-canvas");
   // Wall drawing functions for each cell. Will be called if relevent wall is set to true in cell constructor
-  function drawTopWall(x, y, size, columns, rows) {
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + size / columns, y);
-    ctx.stroke();
-  }
-
-  function drawRightWall(x, y, size, columns, rows) {
-    ctx.beginPath();
-    ctx.moveTo(x + size / columns, y);
-    ctx.lineTo(x + size / columns, y + size / rows);
-    ctx.stroke();
-  }
-
-  function drawBottomWall(x, y, size, columns, rows) {
-    ctx.beginPath();
-    ctx.moveTo(x, y + size / rows);
-    ctx.lineTo(x + size / columns, y + size / rows);
-    ctx.stroke();
-  }
-
-  function drawLeftWall(x, y, size, columns, rows) {
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x, y + size / rows);
-    ctx.stroke();
-  }
 
   // Draws each of the cells on the maze canvas
   function drawMaze(maze) {
     // Initialize the canvas
-    let ctx = mazeCanvas.getContext("2d");
+
+    let mazeCanvas = document.getElementById("maze-canvas");
+    let mazectx = mazeCanvas.getContext("2d");
+    mazeCanvas.height = maze.size;
+    mazeCanvas.width = maze.size;
+    mazectx.strokeStyle = "black";
+    console.log("yo!");
     for (let r = 0; r < maze.rows; r++) {
       for (let c = 0; c < maze.columns; c++) {
         let x = (c * maze.size) / maze.columns;
         let y = (r * maze.size) / maze.rows;
-        ctx.strokeStyle = "#ffffff";
-        ctx.fillStyle = "black";
-        ctx.lineWidth = 2;
         if (maze.grid[r][c].walls.topWall)
-          drawTopWall(x, y, maze.size, maze.columns, maze.rows);
+        {
+          mazectx.beginPath();
+          mazectx.moveTo(x, y);
+          mazectx.lineTo(x + maze.size / maze.columns, y);
+          mazectx.stroke();
+        }
         if (maze.grid[r][c].walls.rightWall)
-          drawRightWall(x, y, maze.size, maze.columns, maze.rows, ctx);
+        {
+          mazectx.beginPath();
+          mazectx.moveTo(x + maze.size / maze.columns, y);
+          mazectx.lineTo(x + maze.size / maze.columns, y + maze.size / maze.rows);
+          mazectx.stroke();
+        }
         if (maze.grid[r][c].walls.bottomWall)
-          drawBottomWall(x, y, maze.size, maze.columns, maze.rows);
+        {
+          mazectx.beginPath();
+          mazectx.moveTo(x, y + maze.size / maze.rows);
+          mazectx.lineTo(x + maze.size / maze.columns, y + maze.size / maze.rows);
+          mazectx.stroke();
+        }
         if (maze.grid[r][c].walls.leftWall)
-          drawLeftWall(x, y, maze.size, maze.columns, maze.rows);
+        {
+          mazectx.beginPath();
+          mazectx.moveTo(x, y);
+          mazectx.lineTo(x, y + maze.size / maze.rows);
+          mazectx.stroke();
+        }
         if (maze.grid[r][c].goal) {
-          ctx.fillStyle = "rgb(83, 247, 43)";
-          ctx.fillRect(
+          mazectx.fillStyle = "rgb(83, 247, 43)";
+          mazectx.fillRect(
             x + 1,
             y + 1,
             maze.size / maze.columns - 2,
@@ -66,15 +61,16 @@ MazeGame.graphics = (function () {
   ////////////////////////////////////////////////////////// PLAYER FUNCTIONS ////////////////////////////////////////////////////////
 
   function drawPlayer(player) {
-    ctx = playerCanvas.getContext("2d");
+    let playerCanvas = document.getElementById("player-canvas");
+    let playerctx = playerCanvas.getContext("2d");
 
     playerCanvas.width = window.innerWidth;
     playerCanvas.height = window.innerHeight;
-    ctx.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
-    ctx.beginPath(); // begin drawing on screen
-    ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2, false);
-    ctx.fillStyle = player.color;
-    ctx.fill();
+    playerctx.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
+    playerctx.beginPath(); // begin drawing on screen
+    playerctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2, false);
+    playerctx.fillStyle = player.color;
+    playerctx.fill();
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
