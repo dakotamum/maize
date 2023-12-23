@@ -39,10 +39,12 @@ class Player {
         );
         this.distToGo = this.distToGo - goDist;
         if (this.distToGo == 0.0) {
-          this.isMoving = false;
-          this.goingUp = false;
-          this.distToGo = this.maze.size / this.maze.rows;
           this.row -= 1;
+          this.distToGo = Math.floor(this.maze.size / this.maze.rows);
+          if (!this.upPressed) {
+            this.isMoving = false;
+            this.goingUp = false;
+          }
         }
         this.y -= goDist;
       }
@@ -88,10 +90,12 @@ class Player {
         );
         this.distToGo = this.distToGo - goDist;
         if (this.distToGo == 0.0) {
-          this.isMoving = false;
-          this.goingLeft = false;
-          this.distToGo = this.maze.size / this.maze.rows;
           this.col -= 1;
+          this.distToGo = Math.floor(this.maze.size / this.maze.rows);
+          if (!this.leftPressed) {
+            this.isMoving = false;
+            this.goingLeft = false;
+          }
         }
         this.x -= goDist;
       }
@@ -111,10 +115,12 @@ class Player {
         );
         this.distToGo = this.distToGo - goDist;
         if (this.distToGo == 0.0) {
-          this.isMoving = false;
-          this.goingRight = false;
-          this.distToGo = this.maze.size / this.maze.rows;
           this.col += 1;
+          this.distToGo = Math.floor(this.maze.size / this.maze.rows);
+          if (!this.rightPressed) {
+            this.isMoving = false;
+            this.goingRight = false;
+          }
         }
         this.x += goDist;
       }
