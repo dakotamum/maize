@@ -7,12 +7,21 @@
   </head>
   <body>
     <link rel="stylesheet" href="style.css" />
-    <button onclick="MazeGame.main.initialize()">HELLO</button>
     <script>
       var MazeGame = {};
     </script>
-    <canvas id="maze-canvas" class="maze-canvas"></canvas>
-    <canvas id="player-canvas" class="player-canvas"></canvas>
+    <div class="center">
+      <div class="left-pane">
+        <canvas id="maze-canvas" class="maze-canvas"></canvas>
+        <canvas id="player-canvas" class="player-canvas"></canvas>
+      </div>
+      <div class="right-pane">
+        <div class="controls">
+          <button onclick="MazeGame.main.initialize()">HELLO</button>
+          <button onclick="MazeGame.main.initialize()">HELLO</button>
+        </div>
+      </div>
+    </div>
     <script src="mazeLogic.js"></script>
     <script src="playerLogic.js"></script>
     <script src="graphics.js"></script>

@@ -1,8 +1,50 @@
 .maze-canvas {
-  position: absolute;
+  background-color: #fffafa;
+  /* position: absolute; */
   z-index: 0;
+  width: 500px;
+  height: 500px;
 }
 .player-canvas {
   position: absolute;
   z-index: 1;
+  width: 500px;
+  height: 500px;
+}
+.center {
+  background-color: aquamarine;
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* justify-content: center;
+  align-items: center; */
+}
+.left-pane {
+  position: relative;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+.right-pane {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: yellowgreen;
+}
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: magenta;
+}
+body {
+  background-color: #252525;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
