@@ -16,7 +16,6 @@ class Player {
     this.col = 0;
     this.velocity = 0.005;
     this.distToGo = Math.floor(maze.size / maze.rows);
-    this.isMoving = false;
     this.maze = maze;
     addEventListener("keydown", (event) => {
       this.keydownHandler(event);
@@ -27,12 +26,12 @@ class Player {
   }
   update(delta) {
     if (this.goingUp) {
-      if (!this.maze.grid[this.row][this.col].walls.topWall && !this.isMoving) {
-        this.isMoving = true;
+      if (!this.maze.grid[this.row][this.col].walls.topWall && !this.goingUp) {
+        this.goingUp = true;
       } else if (this.maze.grid[this.row][this.col].walls.topWall) {
         this.goingUp = false;
       }
-      if (this.isMoving) {
+      if (this.goingUp) {
         let goDist = Math.min(
           (this.maze.size / this.maze.rows) * this.velocity * delta,
           this.distToGo
@@ -42,7 +41,6 @@ class Player {
           this.row -= 1;
           this.distToGo = Math.floor(this.maze.size / this.maze.rows);
           if (!this.upPressed) {
-            this.isMoving = false;
             this.goingUp = false;
           }
         }
@@ -51,13 +49,13 @@ class Player {
     } else if (this.goingDown) {
       if (
         !this.maze.grid[this.row][this.col].walls.bottomWall &&
-        !this.isMoving
+        !this.goingDown
       ) {
-        this.isMoving = true;
+        this.goingDown = true;
       } else if (this.maze.grid[this.row][this.col].walls.bottomWall) {
         this.goingDown = false;
       }
-      if (this.isMoving) {
+      if (this.goingDown) {
         let goDist = Math.min(
           Math.floor(this.maze.size / this.maze.rows) * this.velocity * delta,
           this.distToGo
@@ -68,7 +66,6 @@ class Player {
           console.log(this.row);
           this.distToGo = Math.floor(this.maze.size / this.maze.rows);
           if (!this.downPressed) {
-            this.isMoving = false;
             this.goingDown = false;
           }
         }
@@ -77,13 +74,13 @@ class Player {
     } else if (this.goingLeft) {
       if (
         !this.maze.grid[this.row][this.col].walls.leftWall &&
-        !this.isMoving
+        !this.goingLeft
       ) {
-        this.isMoving = true;
+        this.goingLeft = true;
       } else if (this.maze.grid[this.row][this.col].walls.leftWall) {
         this.goingLeft = false;
       }
-      if (this.isMoving) {
+      if (this.goingLeft) {
         let goDist = Math.min(
           (this.maze.size / this.maze.rows) * this.velocity * delta,
           this.distToGo
@@ -93,7 +90,6 @@ class Player {
           this.col -= 1;
           this.distToGo = Math.floor(this.maze.size / this.maze.rows);
           if (!this.leftPressed) {
-            this.isMoving = false;
             this.goingLeft = false;
           }
         }
@@ -102,13 +98,13 @@ class Player {
     } else if (this.goingRight) {
       if (
         !this.maze.grid[this.row][this.col].walls.rightWall &&
-        !this.isMoving
+        !this.goingRight
       ) {
-        this.isMoving = true;
+        this.goingRight = true;
       } else if (this.maze.grid[this.row][this.col].walls.rightWall) {
         this.goingRight = false;
       }
-      if (this.isMoving) {
+      if (this.goingRight) {
         let goDist = Math.min(
           (this.maze.size / this.maze.rows) * this.velocity * delta,
           this.distToGo
@@ -118,7 +114,6 @@ class Player {
           this.col += 1;
           this.distToGo = Math.floor(this.maze.size / this.maze.rows);
           if (!this.rightPressed) {
-            this.isMoving = false;
             this.goingRight = false;
           }
         }
@@ -126,24 +121,24 @@ class Player {
       }
     }
   }
+
   keydownHandler(event) {
-    if (!this.isMoving) {
-      if (event.key === "w") {
-        this.goingUp = true;
-        this.upPressed = true;
-      }
-      if (event.key === "s") {
-        this.goingDown = true;
-        this.downPressed = true;
-      }
-      if (event.key === "a") {
-        this.goingLeft = true;
-        this.leftPressed = true;
-      }
-      if (event.key === "d") {
-        this.goingRight = true;
-        this.rightPressed = true;
-      }
+    // make it so only one key can be pressed at a time
+    if (event.key === "w" && !this.upPressed && !this.downPressed && !this.leftPressed && !this.rightPressed && !this.goingUp && !this.goingDown && !this.goingLeft && !this.goingRight) {
+      this.upPressed = true;
+      this.goingUp = true;
+    }
+    if (event.key === "s" && !this.upPressed && !this.downPressed && !this.leftPressed && !this.rightPressed && !this.goingUp && !this.goingDown && !this.goingLeft && !this.goingRight) {
+      this.downPressed = true;
+      this.goingDown = true;
+    }
+    if (event.key === "a" && !this.upPressed && !this.downPressed && !this.leftPressed && !this.rightPressed && !this.goingUp && !this.goingDown && !this.goingLeft && !this.goingRight) {
+      this.leftPressed = true;
+      this.goingLeft = true;
+    }
+    if (event.key === "d" && !this.upPressed && !this.downPressed && !this.leftPressed && !this.rightPressed && !this.goingUp && !this.goingDown && !this.goingLeft && !this.goingRight) {
+      this.rightPressed = true;
+      this.goingRight = true;
     }
   }
   keyupHandler(event) {
