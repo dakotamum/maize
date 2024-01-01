@@ -1,6 +1,5 @@
 MazeGame.graphics = (function () {
   //////////////////////////////////////////////////////// MAZE FUNCTIONS ///////////////////////////////////////////////////////
-  // const playerCanvas = document.getElementById("player-canvas");
   // Wall drawing functions for each cell. Will be called if relevent wall is set to true in cell constructor
 
   let playerImage = new Image();

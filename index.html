@@ -17,10 +17,18 @@
       </div>
       <div class="right-pane">
         <div class="controls">
-          <label for="4x4">4x4</label>
-          <input type="radio" id="4x4" name="maze-dimensions" value="4x4" />
-          <label for="16x16">16x16</label>
-          <input type="radio" id="16x16" name="maze-dimensions" value="16x16" />
+          <form>
+            <input
+              type="radio"
+              id="4x4"
+              name="maze-dimensions"
+              value="4"
+              checked
+            />
+            4x4<br />
+            <input type="radio" id="16x16" name="maze-dimensions" value="16" />
+            16x16<br />
+          </form>
           <button onclick="MazeGame.main.initialize()">START</button>
         </div>
       </div>

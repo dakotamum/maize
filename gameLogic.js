@@ -1,10 +1,6 @@
 /*
 TODO:
-  - separate wall drawing logic into graphics
-  - fix bug where player starts drifing into walls as they get further in the maze
-  - make movement continuous when direction key is pressed
   - scoring, options, all that
-  - artistic liberties, i.e character design, maze textures
 */
 
 MazeGame.main = (function (graphics) {
@@ -12,8 +8,11 @@ MazeGame.main = (function (graphics) {
   ("use strict");
 
   let lastFrameTime = performance.now();
-
-  let maze = new Maze(512, 8, 8);
+  let dim = Array.from(document.getElementsByName("maze-dimensions")).find(
+    (radio) => radio.checked
+  ).value;
+  console.log(dim);
+  let maze = new Maze(512, dim, dim);
   maze.initialize();
   let cellSize = Math.floor(maze.size / maze.rows);
   let player = new Player(
