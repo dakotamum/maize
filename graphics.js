@@ -24,6 +24,7 @@ MazeGame.graphics = (function () {
     mazeCanvas.height = maze.size;
     mazeCanvas.width = maze.size;
     mazectx.strokeStyle = "#190019";
+
     for (let r = 0; r < maze.rows; r++) {
       for (let c = 0; c < maze.columns; c++) {
         let x = (c * maze.size) / maze.columns;
@@ -34,7 +35,7 @@ MazeGame.graphics = (function () {
             topWallImage,
             x - maze.size / maze.rows / 8,
             y,
-            (5/4) * maze.size / maze.rows,
+            ((5 / 4) * maze.size) / maze.rows,
             maze.size / maze.rows / 8
           );
         }
@@ -44,10 +45,16 @@ MazeGame.graphics = (function () {
             bottomWallImage,
             x - maze.size / maze.rows / 8,
             y + (7 / 8) * (maze.size / maze.rows),
-            (5/4) * maze.size / maze.rows,
+            ((5 / 4) * maze.size) / maze.rows,
             maze.size / maze.rows / 8
           );
         }
+      }
+    }
+    for (let r = 0; r < maze.rows; r++) {
+      for (let c = 0; c < maze.columns; c++) {
+        let x = (c * maze.size) / maze.columns;
+        let y = (r * maze.size) / maze.rows;
         if (maze.grid[r][c].walls.rightWall) {
           mazectx.beginPath();
           mazectx.drawImage(
@@ -55,7 +62,7 @@ MazeGame.graphics = (function () {
             x + (7 / 8) * (maze.size / maze.rows),
             y - maze.size / maze.rows / 8,
             maze.size / maze.rows / 8,
-            (5/4) * maze.size / maze.rows
+            ((5 / 4) * maze.size) / maze.rows
           );
         }
         if (maze.grid[r][c].walls.leftWall) {
@@ -65,16 +72,16 @@ MazeGame.graphics = (function () {
             x,
             y - maze.size / maze.rows / 8,
             maze.size / maze.rows / 8,
-            (5/4) * maze.size / maze.rows
+            ((5 / 4) * maze.size) / maze.rows
           );
         }
         if (maze.grid[r][c].goal) {
-          mazectx.fillStyle = "rgb(83, 247, 43)";
+          mazectx.fillStyle = "yellow";
           mazectx.fillRect(
-            x + 1,
-            y + 1,
-            maze.size / maze.columns - 2,
-            maze.size / maze.rows - 2
+            x + maze.size / maze.rows / 4,
+            y + maze.size / maze.rows / 4,
+            ((2 / 4) * maze.size) / maze.columns,
+            ((2 / 4) * maze.size) / maze.rows
           );
         }
       }
@@ -92,13 +99,7 @@ MazeGame.graphics = (function () {
     console.log(playerCanvas.width);
     playerctx.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
     playerctx.beginPath();
-    playerctx.drawImage(
-      playerImage,
-      player.x - 25.6,
-      player.y - 25.6,
-      51.2,
-      51.2
-    );
+    playerctx.drawImage(playerImage, player.x - 15, player.y - 15, 30, 30);
     playerctx.fill();
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
