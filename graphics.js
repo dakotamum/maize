@@ -98,7 +98,6 @@ MazeGame.graphics = (function () {
     playerctx.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
     playerctx.beginPath();
     playerctx.imageSmoothingEnabled = false;
-    console.log(player.maze.rows);
     playerctx.drawImage(
       playerImage,
       Math.floor(player.x - player.maze.height / player.maze.rows / 4),

@@ -14,7 +14,7 @@ class Player {
     this.rightPressed = false;
     this.row = 0;
     this.col = 0;
-    this.velocity = 0.005;
+    this.velocity = 0.004;
     this.distToGo = Math.floor(maze.size / maze.rows);
     this.maze = maze;
     addEventListener("keydown", (event) => {
@@ -25,6 +25,36 @@ class Player {
     });
   }
   update(delta) {
+    if (
+      this.upPressed &&
+      !this.goingDown &&
+      !this.goingLeft &&
+      !this.goingRight
+    ) {
+      this.goingUp = true;
+    } else if (
+      this.downPressed &&
+      !this.goingUp &&
+      !this.goingLeft &&
+      !this.goingRight
+    ) {
+      this.goingDown = true;
+    } else if (
+      this.leftPressed &&
+      !this.goingUp &&
+      !this.goingDown &&
+      !this.goingRight
+    ) {
+      this.goingLeft = true;
+    } else if (
+      this.rightPressed &&
+      !this.goingUp &&
+      !this.goingDown &&
+      !this.goingLeft
+    ) {
+      this.goingRight = true;
+    }
+
     if (this.goingUp) {
       if (!this.maze.grid[this.row][this.col].walls.topWall && !this.goingUp) {
         this.goingUp = true;
@@ -63,7 +93,6 @@ class Player {
         this.distToGo = this.distToGo - goDist;
         if (this.distToGo == 0.0) {
           this.row += 1;
-          console.log(this.row);
           this.distToGo = Math.floor(this.maze.size / this.maze.rows);
           if (!this.downPressed) {
             this.goingDown = false;
@@ -124,21 +153,17 @@ class Player {
 
   keydownHandler(event) {
     // make it so only one key can be pressed at a time
-    if (event.key === "w" && !this.upPressed && !this.downPressed && !this.leftPressed && !this.rightPressed && !this.goingUp && !this.goingDown && !this.goingLeft && !this.goingRight) {
+    if (event.key === "w") {
       this.upPressed = true;
-      this.goingUp = true;
     }
-    if (event.key === "s" && !this.upPressed && !this.downPressed && !this.leftPressed && !this.rightPressed && !this.goingUp && !this.goingDown && !this.goingLeft && !this.goingRight) {
+    if (event.key === "s") {
       this.downPressed = true;
-      this.goingDown = true;
     }
-    if (event.key === "a" && !this.upPressed && !this.downPressed && !this.leftPressed && !this.rightPressed && !this.goingUp && !this.goingDown && !this.goingLeft && !this.goingRight) {
+    if (event.key === "a") {
       this.leftPressed = true;
-      this.goingLeft = true;
     }
-    if (event.key === "d" && !this.upPressed && !this.downPressed && !this.leftPressed && !this.rightPressed && !this.goingUp && !this.goingDown && !this.goingLeft && !this.goingRight) {
+    if (event.key === "d") {
       this.rightPressed = true;
-      this.goingRight = true;
     }
   }
   keyupHandler(event) {

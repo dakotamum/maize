@@ -23,7 +23,6 @@ MazeGame.main = (function (graphics) {
     "magenta",
     maze
   );
-  console.log(maze);
 
   function render() {
     graphics.drawPlayer(player);
