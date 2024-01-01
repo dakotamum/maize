@@ -23,8 +23,7 @@ MazeGame.graphics = (function () {
     let mazectx = mazeCanvas.getContext("2d");
     mazeCanvas.height = maze.size;
     mazeCanvas.width = maze.size;
-    mazectx.strokeStyle = "#190019";
-
+    mazectx.imageSmoothingEnabled = false;
     for (let r = 0; r < maze.rows; r++) {
       for (let c = 0; c < maze.columns; c++) {
         let x = (c * maze.size) / maze.columns;
@@ -94,12 +93,19 @@ MazeGame.graphics = (function () {
     let playerCanvas = document.getElementById("player-canvas");
     let playerctx = playerCanvas.getContext("2d");
 
-    playerCanvas.width = maze.width;
-    playerCanvas.height = maze.height;
-    console.log(playerCanvas.width);
+    playerCanvas.width = player.maze.width;
+    playerCanvas.height = player.maze.height;
     playerctx.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
     playerctx.beginPath();
-    playerctx.drawImage(playerImage, player.x - 15, player.y - 15, 30, 30);
+    playerctx.imageSmoothingEnabled = false;
+    console.log(player.maze.rows);
+    playerctx.drawImage(
+      playerImage,
+      Math.floor(player.x - player.maze.height / player.maze.rows / 4),
+      Math.floor(player.y - player.maze.height / player.maze.rows / 4),
+      Math.floor(player.maze.width / player.maze.rows / 2),
+      Math.floor(player.maze.width / player.maze.rows / 2)
+    );
     playerctx.fill();
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
