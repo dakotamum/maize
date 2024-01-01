@@ -3,6 +3,18 @@ MazeGame.graphics = (function () {
   // const playerCanvas = document.getElementById("player-canvas");
   // Wall drawing functions for each cell. Will be called if relevent wall is set to true in cell constructor
 
+  let playerImage = new Image();
+  playerImage.src = "assets/dino.png";
+
+  let topWallImage = new Image();
+  topWallImage.src = "assets/maze-top-wall.png";
+  let bottomWallImage = new Image();
+  bottomWallImage.src = "assets/maze-bottom-wall.png";
+  let leftWallImage = new Image();
+  leftWallImage.src = "assets/maze-left-wall.png";
+  let rightWallImage = new Image();
+  rightWallImage.src = "assets/maze-right-wall.png";
+
   // Draws each of the cells on the maze canvas
   function drawMaze(maze) {
     // Initialize the canvas
@@ -11,39 +23,50 @@ MazeGame.graphics = (function () {
     let mazectx = mazeCanvas.getContext("2d");
     mazeCanvas.height = maze.size;
     mazeCanvas.width = maze.size;
-    mazectx.strokeStyle = "black";
-    console.log("yo!");
+    mazectx.strokeStyle = "#190019";
     for (let r = 0; r < maze.rows; r++) {
       for (let c = 0; c < maze.columns; c++) {
         let x = (c * maze.size) / maze.columns;
         let y = (r * maze.size) / maze.rows;
-        if (maze.grid[r][c].walls.topWall)
-        {
+        if (maze.grid[r][c].walls.topWall) {
           mazectx.beginPath();
-          mazectx.moveTo(x, y);
-          mazectx.lineTo(x + maze.size / maze.columns, y);
-          mazectx.stroke();
+          mazectx.drawImage(
+            topWallImage,
+            x - maze.size / maze.rows / 8,
+            y,
+            (5/4) * maze.size / maze.rows,
+            maze.size / maze.rows / 8
+          );
         }
-        if (maze.grid[r][c].walls.rightWall)
-        {
+        if (maze.grid[r][c].walls.bottomWall) {
           mazectx.beginPath();
-          mazectx.moveTo(x + maze.size / maze.columns, y);
-          mazectx.lineTo(x + maze.size / maze.columns, y + maze.size / maze.rows);
-          mazectx.stroke();
+          mazectx.drawImage(
+            bottomWallImage,
+            x - maze.size / maze.rows / 8,
+            y + (7 / 8) * (maze.size / maze.rows),
+            (5/4) * maze.size / maze.rows,
+            maze.size / maze.rows / 8
+          );
         }
-        if (maze.grid[r][c].walls.bottomWall)
-        {
+        if (maze.grid[r][c].walls.rightWall) {
           mazectx.beginPath();
-          mazectx.moveTo(x, y + maze.size / maze.rows);
-          mazectx.lineTo(x + maze.size / maze.columns, y + maze.size / maze.rows);
-          mazectx.stroke();
+          mazectx.drawImage(
+            rightWallImage,
+            x + (7 / 8) * (maze.size / maze.rows),
+            y - maze.size / maze.rows / 8,
+            maze.size / maze.rows / 8,
+            (5/4) * maze.size / maze.rows
+          );
         }
-        if (maze.grid[r][c].walls.leftWall)
-        {
+        if (maze.grid[r][c].walls.leftWall) {
           mazectx.beginPath();
-          mazectx.moveTo(x, y);
-          mazectx.lineTo(x, y + maze.size / maze.rows);
-          mazectx.stroke();
+          mazectx.drawImage(
+            leftWallImage,
+            x,
+            y - maze.size / maze.rows / 8,
+            maze.size / maze.rows / 8,
+            (5/4) * maze.size / maze.rows
+          );
         }
         if (maze.grid[r][c].goal) {
           mazectx.fillStyle = "rgb(83, 247, 43)";
@@ -64,12 +87,18 @@ MazeGame.graphics = (function () {
     let playerCanvas = document.getElementById("player-canvas");
     let playerctx = playerCanvas.getContext("2d");
 
-    playerCanvas.width = window.innerWidth;
-    playerCanvas.height = window.innerHeight;
+    playerCanvas.width = maze.width;
+    playerCanvas.height = maze.height;
+    console.log(playerCanvas.width);
     playerctx.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
-    playerctx.beginPath(); // begin drawing on screen
-    playerctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2, false);
-    playerctx.fillStyle = player.color;
+    playerctx.beginPath();
+    playerctx.drawImage(
+      playerImage,
+      player.x - 25.6,
+      player.y - 25.6,
+      51.2,
+      51.2
+    );
     playerctx.fill();
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
