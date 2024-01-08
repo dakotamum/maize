@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name=""viewport" content=""width=device-width, initial-scale="1.0"/>
-    <title>A Zing Maze</title>
+    <title>A-maze-ing</title>
   </head>
   <body>
     <link rel="stylesheet" href="style.css" />
@@ -18,18 +18,22 @@
       <div class="right-pane">
         <div class="controls">
           <form>
+            <input type="radio" id="4x4" name="maze-dimensions" value="4" />
+            4x4<br />
             <input
               type="radio"
-              id="4x4"
+              id="8x8"
               name="maze-dimensions"
-              value="4"
+              value="8"
               checked
             />
-            4x4<br />
+            8x8<br />
             <input type="radio" id="16x16" name="maze-dimensions" value="16" />
             16x16<br />
+            <input type="radio" id="32x32" name="maze-dimensions" value="32" />
+            32x32<br />
           </form>
-          <button onclick="MazeGame.main.initialize()">START</button>
+          <button onclick="MazeGame.main.initialize()">New Game</button>
         </div>
       </div>
     </div>
