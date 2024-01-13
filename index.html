@@ -10,30 +10,42 @@
     <script>
       var MazeGame = {};
     </script>
-    <div class="center">
-      <div class="left-pane">
-        <canvas id="maze-canvas" class="maze-canvas"></canvas>
-        <canvas id="player-canvas" class="player-canvas"></canvas>
-      </div>
-      <div class="right-pane">
-        <div class="controls">
-          <form>
-            <input type="radio" id="4x4" name="maze-dimensions" value="4" />
-            4x4<br />
-            <input
-              type="radio"
-              id="8x8"
-              name="maze-dimensions"
-              value="8"
-              checked
-            />
-            8x8<br />
-            <input type="radio" id="16x16" name="maze-dimensions" value="16" />
-            16x16<br />
-            <input type="radio" id="32x32" name="maze-dimensions" value="32" />
-            32x32<br />
-          </form>
-          <button onclick="MazeGame.main.initialize()">New Game</button>
+    <div class="big-board">
+      <div class="center">
+        <div class="left-pane">
+          <canvas id="maze-canvas" class="maze-canvas"></canvas>
+          <canvas id="player-canvas" class="player-canvas"></canvas>
+        </div>
+        <div class="right-pane">
+          <div class="controls">
+            <form>
+              <input type="radio" id="4x4" name="maze-dimensions" value="4" />
+              4x4<br />
+              <input
+                type="radio"
+                id="8x8"
+                name="maze-dimensions"
+                value="8"
+                checked
+              />
+              8x8<br />
+              <input
+                type="radio"
+                id="16x16"
+                name="maze-dimensions"
+                value="16"
+              />
+              16x16<br />
+              <input
+                type="radio"
+                id="32x32"
+                name="maze-dimensions"
+                value="32"
+              />
+              32x32<br />
+            </form>
+            <button onclick="MazeGame.main.initialize()">New Game</button>
+          </div>
         </div>
       </div>
     </div>

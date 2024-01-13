@@ -1,13 +1,12 @@
 body {
   margin: 0px;
-  background-color: #190019;
+  background-color: #303030;
   display: grid;
   place-items: center;
   height: 100vh;
 }
 .maze-canvas {
-  background-color: #6ef5e3;
-  border: solid 2px #6ef5e3;
+  background-color: #f6f6f6;
   z-index: 0;
   width: 512px;
   height: 512px;
@@ -21,25 +20,33 @@ body {
   image-rendering: pixelated;
 }
 .center {
-  background-color: aquamarine;
+  padding: 25px;
   display: flex;
   justify-content: space-between;
-  border: solid #fbe4d8 2px;
+  background: #919191;
 }
 .left-pane {
   position: relative;
-  background-color: #252525;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 50px;
+  padding: 10px;
+  border: solid 10px #303030;
 }
 .right-pane {
   position: relative;
   display: grid;
   flex-direction: column;
   align-items: center;
-  background-color: #522b5b;
+  background-color: #303030;
+  padding: 40px;
+}
+.top-pane {
+  position: relative;
+  /* display: grid;
+  flex-direction: column;
+  align-items: center; */
+  background-color: #c3fcf2;
   padding: 40px;
 }
 .controls {
@@ -47,5 +54,5 @@ body {
   flex-direction: row;
   align-items: center;
   padding: 20px;
-  background-color: magenta;
+  background-color: #f6f6f6;
 }
