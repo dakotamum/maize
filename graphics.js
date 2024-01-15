@@ -2,8 +2,30 @@ MazeGame.graphics = (function () {
   //////////////////////////////////////////////////////// MAZE FUNCTIONS ///////////////////////////////////////////////////////
   // Wall drawing functions for each cell. Will be called if relevent wall is set to true in cell constructor
 
-  let playerImage = new Image();
-  playerImage.src = "assets/dino.png";
+  let playerImages = [];
+  playerImages.push(new Image());
+  playerImages[0].src = "assets/dino/1.png";
+
+  playerImages.push(new Image());
+  playerImages[1].src = "assets/dino/2.png";
+
+  playerImages.push(new Image());
+  playerImages[2].src = "assets/dino/3.png";
+
+  playerImages.push(new Image());
+  playerImages[3].src = "assets/dino/4.png";
+
+  playerImages.push(new Image());
+  playerImages[4].src = "assets/dino/5.png";
+
+  playerImages.push(new Image());
+  playerImages[5].src = "assets/dino/6.png";
+
+  playerImages.push(new Image());
+  playerImages[6].src = "assets/dino/7.png";
+
+  playerImages.push(new Image());
+  playerImages[7].src = "assets/dino/8.png";
 
   let topWallImage = new Image();
   topWallImage.src = "assets/maze-top-wall.png";
@@ -98,7 +120,7 @@ MazeGame.graphics = (function () {
     playerctx.beginPath();
     playerctx.imageSmoothingEnabled = false;
     playerctx.drawImage(
-      playerImage,
+      playerImages[0],
       Math.floor(player.x - player.maze.height / player.maze.rows / 4),
       Math.floor(player.y - player.maze.height / player.maze.rows / 4),
       Math.floor(player.maze.width / player.maze.rows / 2),
