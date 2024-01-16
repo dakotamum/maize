@@ -14,7 +14,7 @@ class Player {
     this.rightPressed = false;
     this.row = 0;
     this.col = 0;
-    this.velocity = 0.004;
+    this.velocity = 0.002;
     this.distToGo = Math.floor(maze.size / maze.rows);
     this.maze = maze;
     addEventListener("keydown", (event) => {

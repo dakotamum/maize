@@ -31,7 +31,14 @@ MazeGame.main = (function (graphics) {
   let cellSize;
 
   function render() {
-    graphics.drawPlayer(player);
+    if (
+      player.goingRight ||
+      player.goingLeft ||
+      player.goingUp ||
+      player.goingDown
+    ) {
+      graphics.drawPlayer(player);
+    }
   }
 
   function update(delta) {
@@ -59,6 +66,7 @@ MazeGame.main = (function (graphics) {
       maze
     );
     graphics.drawMaze(maze);
+    graphics.drawPlayer(player);
     requestAnimationFrame(gameLoop);
   };
 
