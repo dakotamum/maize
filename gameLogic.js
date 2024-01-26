@@ -58,7 +58,7 @@ MazeGame.main = (function (graphics) {
     let maze = mazeTemplate(512, dim, dim);
     maze.initialize();
     cellSize = Math.floor(maze.size / maze.rows);
-    player = new Player(
+    player = playerTemplate(
       cellSize / 2,
       cellSize / 2,
       cellSize / 3,

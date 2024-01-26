@@ -1,183 +1,184 @@
-class Player {
-  constructor(x, y, radius, color, maze) {
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    this.color = color;
-    this.goingDown = false;
-    this.goingUp = false;
-    this.goingLeft = false;
-    this.goingRight = false;
-    this.downPressed = false;
-    this.upPressed = false;
-    this.leftPressed = false;
-    this.rightPressed = false;
-    this.row = 0;
-    this.col = 0;
-    this.velocity = 0.002;
-    this.distToGo = Math.floor(maze.size / maze.rows);
-    this.maze = maze;
-    addEventListener("keydown", (event) => {
-      this.keydownHandler(event);
-    });
-    addEventListener("keyup", (event) => {
-      this.keyupHandler(event);
-    });
-  }
-  update(delta) {
-    if (
-      this.upPressed &&
-      !this.goingDown &&
-      !this.goingLeft &&
-      !this.goingRight
-    ) {
-      this.goingUp = true;
-    } else if (
-      this.downPressed &&
-      !this.goingUp &&
-      !this.goingLeft &&
-      !this.goingRight
-    ) {
-      this.goingDown = true;
-    } else if (
-      this.leftPressed &&
-      !this.goingUp &&
-      !this.goingDown &&
-      !this.goingRight
-    ) {
-      this.goingLeft = true;
-    } else if (
-      this.rightPressed &&
-      !this.goingUp &&
-      !this.goingDown &&
-      !this.goingLeft
-    ) {
-      this.goingRight = true;
-    }
+function playerTemplate (x, y, radius, color, maze) {
+  let that = {};
+    that.x = x;
+    that.y = y;
+    that.radius = radius;
+    that.color = color;
+    that.goingDown = false;
+    that.goingUp = false;
+    that.goingLeft = false;
+    that.goingRight = false;
+    that.downPressed = false;
+    that.upPressed = false;
+    that.leftPressed = false;
+    that.rightPressed = false;
+    that.row = 0;
+    that.col = 0;
+    that.velocity = 0.002;
+    that.distToGo = Math.floor(maze.size / maze.rows);
+    that.maze = maze;
 
-    if (this.goingUp) {
-      if (!this.maze.grid[this.row][this.col].walls.topWall && !this.goingUp) {
-        this.goingUp = true;
-      } else if (this.maze.grid[this.row][this.col].walls.topWall) {
-        this.goingUp = false;
-      }
-      if (this.goingUp) {
-        let goDist = Math.min(
-          (this.maze.size / this.maze.rows) * this.velocity * delta,
-          this.distToGo
-        );
-        this.distToGo = this.distToGo - goDist;
-        if (this.distToGo == 0.0) {
-          this.row -= 1;
-          this.distToGo = Math.floor(this.maze.size / this.maze.rows);
-          if (!this.upPressed) {
-            this.goingUp = false;
-          }
-        }
-        this.y -= goDist;
-      }
-    } else if (this.goingDown) {
-      if (
-        !this.maze.grid[this.row][this.col].walls.bottomWall &&
-        !this.goingDown
-      ) {
-        this.goingDown = true;
-      } else if (this.maze.grid[this.row][this.col].walls.bottomWall) {
-        this.goingDown = false;
-      }
-      if (this.goingDown) {
-        let goDist = Math.min(
-          Math.floor(this.maze.size / this.maze.rows) * this.velocity * delta,
-          this.distToGo
-        );
-        this.distToGo = this.distToGo - goDist;
-        if (this.distToGo == 0.0) {
-          this.row += 1;
-          this.distToGo = Math.floor(this.maze.size / this.maze.rows);
-          if (!this.downPressed) {
-            this.goingDown = false;
-          }
-        }
-        this.y += goDist;
-      }
-    } else if (this.goingLeft) {
-      if (
-        !this.maze.grid[this.row][this.col].walls.leftWall &&
-        !this.goingLeft
-      ) {
-        this.goingLeft = true;
-      } else if (this.maze.grid[this.row][this.col].walls.leftWall) {
-        this.goingLeft = false;
-      }
-      if (this.goingLeft) {
-        let goDist = Math.min(
-          (this.maze.size / this.maze.rows) * this.velocity * delta,
-          this.distToGo
-        );
-        this.distToGo = this.distToGo - goDist;
-        if (this.distToGo == 0.0) {
-          this.col -= 1;
-          this.distToGo = Math.floor(this.maze.size / this.maze.rows);
-          if (!this.leftPressed) {
-            this.goingLeft = false;
-          }
-        }
-        this.x -= goDist;
-      }
-    } else if (this.goingRight) {
-      if (
-        !this.maze.grid[this.row][this.col].walls.rightWall &&
-        !this.goingRight
-      ) {
-        this.goingRight = true;
-      } else if (this.maze.grid[this.row][this.col].walls.rightWall) {
-        this.goingRight = false;
-      }
-      if (this.goingRight) {
-        let goDist = Math.min(
-          (this.maze.size / this.maze.rows) * this.velocity * delta,
-          this.distToGo
-        );
-        this.distToGo = this.distToGo - goDist;
-        if (this.distToGo == 0.0) {
-          this.col += 1;
-          this.distToGo = Math.floor(this.maze.size / this.maze.rows);
-          if (!this.rightPressed) {
-            this.goingRight = false;
-          }
-        }
-        this.x += goDist;
-      }
-    }
-  }
-
-  keydownHandler(event) {
+  that.keydownHandler = function(event) {
     // make it so only one key can be pressed at a time
     if (event.key === "w") {
-      this.upPressed = true;
+      that.upPressed = true;
     }
     if (event.key === "s") {
-      this.downPressed = true;
+      that.downPressed = true;
     }
     if (event.key === "a") {
-      this.leftPressed = true;
+      that.leftPressed = true;
     }
     if (event.key === "d") {
-      this.rightPressed = true;
+      that.rightPressed = true;
     }
   }
-  keyupHandler(event) {
+  that.keyupHandler = function(event) {
     if (event.key === "w") {
-      this.upPressed = false;
+      that.upPressed = false;
     }
     if (event.key === "s") {
-      this.downPressed = false;
+      that.downPressed = false;
     }
     if (event.key === "a") {
-      this.leftPressed = false;
+      that.leftPressed = false;
     }
     if (event.key === "d") {
-      this.rightPressed = false;
+      that.rightPressed = false;
     }
   }
+    addEventListener("keydown", (event) => {
+      that.keydownHandler(event);
+    });
+    addEventListener("keyup", (event) => {
+      that.keyupHandler(event);
+    });
+
+  that.update = function(delta) {
+    if (
+      that.upPressed &&
+      !that.goingDown &&
+      !that.goingLeft &&
+      !that.goingRight
+    ) {
+      that.goingUp = true;
+    } else if (
+      that.downPressed &&
+      !that.goingUp &&
+      !that.goingLeft &&
+      !that.goingRight
+    ) {
+      that.goingDown = true;
+    } else if (
+      that.leftPressed &&
+      !that.goingUp &&
+      !that.goingDown &&
+      !that.goingRight
+    ) {
+      that.goingLeft = true;
+    } else if (
+      that.rightPressed &&
+      !that.goingUp &&
+      !that.goingDown &&
+      !that.goingLeft
+    ) {
+      that.goingRight = true;
+    }
+
+    if (that.goingUp) {
+      if (!that.maze.grid[that.row][that.col].walls.topWall && !that.goingUp) {
+        that.goingUp = true;
+      } else if (that.maze.grid[that.row][that.col].walls.topWall) {
+        that.goingUp = false;
+      }
+      if (that.goingUp) {
+        let goDist = Math.min(
+          (that.maze.size / that.maze.rows) * that.velocity * delta,
+          that.distToGo
+        );
+        that.distToGo = that.distToGo - goDist;
+        if (that.distToGo == 0.0) {
+          that.row -= 1;
+          that.distToGo = Math.floor(that.maze.size / that.maze.rows);
+          if (!that.upPressed) {
+            that.goingUp = false;
+          }
+        }
+        that.y -= goDist;
+      }
+    } else if (that.goingDown) {
+      if (
+        !that.maze.grid[that.row][that.col].walls.bottomWall &&
+        !that.goingDown
+      ) {
+        that.goingDown = true;
+      } else if (that.maze.grid[that.row][that.col].walls.bottomWall) {
+        that.goingDown = false;
+      }
+      if (that.goingDown) {
+        let goDist = Math.min(
+          Math.floor(that.maze.size / that.maze.rows) * that.velocity * delta,
+          that.distToGo
+        );
+        that.distToGo = that.distToGo - goDist;
+        if (that.distToGo == 0.0) {
+          that.row += 1;
+          that.distToGo = Math.floor(that.maze.size / that.maze.rows);
+          if (!that.downPressed) {
+            that.goingDown = false;
+          }
+        }
+        that.y += goDist;
+      }
+    } else if (that.goingLeft) {
+      if (
+        !that.maze.grid[that.row][that.col].walls.leftWall &&
+        !that.goingLeft
+      ) {
+        that.goingLeft = true;
+      } else if (that.maze.grid[that.row][that.col].walls.leftWall) {
+        that.goingLeft = false;
+      }
+      if (that.goingLeft) {
+        let goDist = Math.min(
+          (that.maze.size / that.maze.rows) * that.velocity * delta,
+          that.distToGo
+        );
+        that.distToGo = that.distToGo - goDist;
+        if (that.distToGo == 0.0) {
+          that.col -= 1;
+          that.distToGo = Math.floor(that.maze.size / that.maze.rows);
+          if (!that.leftPressed) {
+            that.goingLeft = false;
+          }
+        }
+        that.x -= goDist;
+      }
+    } else if (that.goingRight) {
+      if (
+        !that.maze.grid[that.row][that.col].walls.rightWall &&
+        !that.goingRight
+      ) {
+        that.goingRight = true;
+      } else if (that.maze.grid[that.row][that.col].walls.rightWall) {
+        that.goingRight = false;
+      }
+      if (that.goingRight) {
+        let goDist = Math.min(
+          (that.maze.size / that.maze.rows) * that.velocity * delta,
+          that.distToGo
+        );
+        that.distToGo = that.distToGo - goDist;
+        if (that.distToGo == 0.0) {
+          that.col += 1;
+          that.distToGo = Math.floor(that.maze.size / that.maze.rows);
+          if (!that.rightPressed) {
+            that.goingRight = false;
+          }
+        }
+        that.x += goDist;
+      }
+    }
+  }
+  return that;
 }
