@@ -23,7 +23,7 @@ function mazeTemplate(size, rows, columns) {
       let row = [];
       for (let c = 0; c < columns; c++) {
         // Create a new instance of the Cell class for each element in the 2D array and push to the maze grid array
-        let cell = new Cell(r, c, that.grid, size);
+        let cell = cellTemplate(r, c, that.grid, size);
         row.push(cell);
       }
       that.grid.push(row);
@@ -68,29 +68,27 @@ function mazeTemplate(size, rows, columns) {
   return that;
 };
 
-class Cell {
-  // Constructor takes in the rowNum and colNum which will be used as coordinates to draw on the canvas.
-  constructor(rowNum, colNum, parentGrid, parentSize) {
-    this.rowNum = rowNum;
-    this.colNum = colNum;
-    this.visited = false;
-    this.walls = {
-      topWall: true,
-      rightWall: true,
-      bottomWall: true,
-      leftWall: true,
-    };
-    this.goal = false;
-    // parentGrid is passed in to enable the checkneighbours method.
-    // parentSize is passed in to set the size of each cell on the grid
-    this.parentGrid = parentGrid;
-    this.parentSize = parentSize;
-  }
+function cellTemplate(rowNum, colNum, parentGrid, parentSize) {
+  let that = {};
+  that.rowNum = rowNum;
+  that.colNum = colNum;
+  that.visited = false;
+  that.walls = {
+    topWall: true,
+    rightWall: true,
+    bottomWall: true,
+    leftWall: true,
+  };
+  that.goal = false;
+  // parentGrid is passed in to enable the checkneighbours method.
+  // parentSize is passed in to set the size of each cell on the grid
+  that.parentGrid = parentGrid;
+  that.parentSize = parentSize;
 
-  checkNeighbours() {
-    let grid = this.parentGrid;
-    let row = this.rowNum;
-    let col = this.colNum;
+  that.checkNeighbours = function() {
+    let grid = parentGrid;
+    let row = rowNum;
+    let col = colNum;
     let neighbours = [];
 
     // The following lines push all available neighbours to the neighbours array
@@ -115,7 +113,7 @@ class Cell {
     }
   }
 
-  removeWalls(cell1, cell2) {
+  that.removeWalls = function(cell1, cell2) {
     // compares to two cells on x axis
     let x = cell1.colNum - cell2.colNum;
     // Removes the relevant walls if there is a different on x axis
@@ -137,4 +135,5 @@ class Cell {
       cell2.walls.topWall = false;
     }
   }
+  return that;
 }
