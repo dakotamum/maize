@@ -1,7 +1,4 @@
 MazeGame.graphics = (function () {
-  //////////////////////////////////////////////////////// MAZE FUNCTIONS ///////////////////////////////////////////////////////
-  // Wall drawing functions for each cell. Will be called if relevent wall is set to true in cell constructor
-
   let playerRightImages = [];
   let playerLeftImages = [];
 
@@ -62,10 +59,7 @@ MazeGame.graphics = (function () {
   let rightWallImage = new Image();
   rightWallImage.src = "assets/maze-right-wall.png";
 
-  // Draws each of the cells on the maze canvas
   function drawMaze(maze) {
-    // Initialize the canvas
-
     let mazeCanvas = document.getElementById("maze-canvas");
     let mazectx = mazeCanvas.getContext("2d");
     mazeCanvas.height = maze.size;
@@ -134,13 +128,10 @@ MazeGame.graphics = (function () {
     }
   }
 
-  ////////////////////////////////////////////////////////// PLAYER FUNCTIONS ////////////////////////////////////////////////////////
-
   function drawPlayer(player) {
     let playerCanvas = document.getElementById("player-canvas");
     let playerctx = playerCanvas.getContext("2d");
 
-    // determine which image to use based on how much further the player has to go compared to the distance between cells
     let toGoRatio = player.distToGo / (player.maze.size / player.maze.rows);
     let selectedImageNum = 0;
     let selectedImage;
@@ -180,7 +171,6 @@ MazeGame.graphics = (function () {
     );
     playerctx.fill();
   }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   let api = {
     drawMaze: drawMaze,
