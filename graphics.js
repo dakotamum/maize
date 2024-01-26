@@ -137,8 +137,6 @@ MazeGame.graphics = (function () {
     let selectedImage;
     let imageChunk = 1.0 / 8.0;
 
-    console.log(toGoRatio);
-
     if (toGoRatio > imageChunk && toGoRatio <= imageChunk * 2)
       selectedImageNum = 1;
     else if (toGoRatio >= imageChunk * 2 && toGoRatio < imageChunk * 3)

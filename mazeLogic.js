@@ -2,73 +2,71 @@
 // DEPTH FIRST SEARCH MAZE IMPLEMENTATION IN JAVASCRIPT BY CONOR BAILEY
 
 // Initialize the canvas
-let maze = document.getElementById("maze-canvas");
-let ctx = maze.getContext("2d");
-let generationComplete = false;
+// let maze = document.getElementById("maze-canvas");
+// let ctx = maze.getContext("2d");
 
-let current;
-let goal;
+function mazeTemplate(size, rows, columns) {
+  let that = {};
+  that.generationComplete = false;
+  that.current;
+  that.grid = [];
+  that.stack = [];
+  that.size = size;
+  that.rows = rows;
+  that.columns = columns;
+  that.height = size
+  that.width = size
 
-class Maze {
-  constructor(size, rows, columns) {
-    this.size = size;
-    this.columns = columns;
-    this.rows = rows;
-    this.grid = [];
-    this.stack = [];
-  }
   // Set the grid: Create new this.grid array based on number of instance rows and columns
-  setup() {
-    for (let r = 0; r < this.rows; r++) {
+  function setup() {
+    for (let r = 0; r < rows; r++) {
       let row = [];
-      for (let c = 0; c < this.columns; c++) {
+      for (let c = 0; c < columns; c++) {
         // Create a new instance of the Cell class for each element in the 2D array and push to the maze grid array
-        let cell = new Cell(r, c, this.grid, this.size);
+        let cell = new Cell(r, c, that.grid, size);
         row.push(cell);
       }
-      this.grid.push(row);
+      that.grid.push(row);
     }
     // Set the starting grid
-    current = this.grid[0][0];
-    this.grid[this.rows - 1][this.columns - 1].goal = true;
+    that.current = that.grid[0][0];
+    that.grid[rows - 1][columns - 1].goal = true;
   }
   // Draw the canvas by setting the size and placing the cells in the grid array on the canvas.
-  generate() {
-    this.width = this.size;
-    this.height = this.size;
-    // this.style.background = "black";
+  function generate() {
     // Set the first cell as visited
-    current.visited = true;
+    that.current.visited = true;
     // This function will assign the variable 'next' to random cell out of the current cells available neighbouting cells
-    let next = current.checkNeighbours();
+    let next = that.current.checkNeighbours();
     // If there is a non visited neighbour cell
     if (next) {
       next.visited = true;
       // Add the current cell to the stack for backtracking
-      this.stack.push(current);
+      that.stack.push(that.current);
       // This function compares the current cell to the next cell and removes the relevant walls for each cell
-      current.removeWalls(current, next);
+      that.current.removeWalls(that.current, next);
       // Set the nect cell to the current cell
-      current = next;
+      that.current = next;
 
       // Else if there are no available neighbours start backtracking using the stack
-    } else if (this.stack.length > 0) {
-      let cell = this.stack.pop();
-      current = cell;
+    } else if (that.stack.length > 0) {
+      let cell = that.stack.pop();
+      that.current = cell;
     }
     // If no more items in the stack then all cells have been visted and the function can be exited
-    if (this.stack.length === 0) {
-      generationComplete = true;
+    if (that.stack.length === 0) {
+      that.generationComplete = true;
       return;
     }
     // Recursively call the generate function. This will be called up until the stack is empty
-    this.generate();
+    generate();
   }
-  initialize() {
-    this.setup();
-    this.generate();
+  that.initialize = function() {
+    setup();
+    generate();
   }
-}
+  return that;
+};
 
 class Cell {
   // Constructor takes in the rowNum and colNum which will be used as coordinates to draw on the canvas.
@@ -116,6 +114,7 @@ class Cell {
       return undefined;
     }
   }
+
   removeWalls(cell1, cell2) {
     // compares to two cells on x axis
     let x = cell1.colNum - cell2.colNum;
