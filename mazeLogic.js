@@ -6,8 +6,77 @@
 // let ctx = maze.getContext("2d");
 
 function mazeTemplate(size, rows, columns) {
+  function cellTemplate(rowNum, colNum, parentGrid, parentSize) {
+    let that = {};
+    that.rowNum = rowNum;
+    that.colNum = colNum;
+    that.visited = false;
+    that.walls = {
+      topWall: true,
+      rightWall: true,
+      bottomWall: true,
+      leftWall: true,
+    };
+    that.goal = false;
+    // parentGrid is passed in to enable the checkneighbours method.
+    // parentSize is passed in to set the size of each cell on the grid
+    that.parentGrid = parentGrid;
+    that.parentSize = parentSize;
+
+    that.checkNeighbours = function() {
+      let grid = parentGrid;
+      let row = rowNum;
+      let col = colNum;
+      let neighbours = [];
+
+      // The following lines push all available neighbours to the neighbours array
+      // undefined is returned where the index is out of bounds (edge cases)
+      let top = row !== 0 ? grid[row - 1][col] : undefined;
+      let right = col !== grid.length - 1 ? grid[row][col + 1] : undefined;
+      let bottom = row !== grid.length - 1 ? grid[row + 1][col] : undefined;
+      let left = col !== 0 ? grid[row][col - 1] : undefined;
+
+      // if the following are not 'undefined' then push them to the neighbours array
+      if (top && !top.visited) neighbours.push(top);
+      if (right && !right.visited) neighbours.push(right);
+      if (bottom && !bottom.visited) neighbours.push(bottom);
+      if (left && !left.visited) neighbours.push(left);
+
+      // Choose a random neighbour from the neighbours array
+      if (neighbours.length !== 0) {
+        let random = Math.floor(Math.random() * neighbours.length);
+        return neighbours[random];
+      } else {
+        return undefined;
+      }
+    }
+
+    that.removeWalls = function(cell1, cell2) {
+      // compares to two cells on x axis
+      let x = cell1.colNum - cell2.colNum;
+      // Removes the relevant walls if there is a different on x axis
+      if (x === 1) {
+        cell1.walls.leftWall = false;
+        cell2.walls.rightWall = false;
+      } else if (x === -1) {
+        cell1.walls.rightWall = false;
+        cell2.walls.leftWall = false;
+      }
+      // compares to two cells on x axis
+      let y = cell1.rowNum - cell2.rowNum;
+      // Removes the relevant walls if there is a different on x axis
+      if (y === 1) {
+        cell1.walls.topWall = false;
+        cell2.walls.bottomWall = false;
+      } else if (y === -1) {
+        cell1.walls.bottomWall = false;
+        cell2.walls.topWall = false;
+      }
+    }
+    return that;
+  }
+
   let that = {};
-  that.generationComplete = false;
   that.current;
   that.grid = [];
   that.stack = [];
@@ -55,7 +124,7 @@ function mazeTemplate(size, rows, columns) {
     }
     // If no more items in the stack then all cells have been visted and the function can be exited
     if (that.stack.length === 0) {
-      that.generationComplete = true;
+      // that.generationComplete = true;
       return;
     }
     // Recursively call the generate function. This will be called up until the stack is empty
@@ -68,72 +137,3 @@ function mazeTemplate(size, rows, columns) {
   return that;
 };
 
-function cellTemplate(rowNum, colNum, parentGrid, parentSize) {
-  let that = {};
-  that.rowNum = rowNum;
-  that.colNum = colNum;
-  that.visited = false;
-  that.walls = {
-    topWall: true,
-    rightWall: true,
-    bottomWall: true,
-    leftWall: true,
-  };
-  that.goal = false;
-  // parentGrid is passed in to enable the checkneighbours method.
-  // parentSize is passed in to set the size of each cell on the grid
-  that.parentGrid = parentGrid;
-  that.parentSize = parentSize;
-
-  that.checkNeighbours = function() {
-    let grid = parentGrid;
-    let row = rowNum;
-    let col = colNum;
-    let neighbours = [];
-
-    // The following lines push all available neighbours to the neighbours array
-    // undefined is returned where the index is out of bounds (edge cases)
-    let top = row !== 0 ? grid[row - 1][col] : undefined;
-    let right = col !== grid.length - 1 ? grid[row][col + 1] : undefined;
-    let bottom = row !== grid.length - 1 ? grid[row + 1][col] : undefined;
-    let left = col !== 0 ? grid[row][col - 1] : undefined;
-
-    // if the following are not 'undefined' then push them to the neighbours array
-    if (top && !top.visited) neighbours.push(top);
-    if (right && !right.visited) neighbours.push(right);
-    if (bottom && !bottom.visited) neighbours.push(bottom);
-    if (left && !left.visited) neighbours.push(left);
-
-    // Choose a random neighbour from the neighbours array
-    if (neighbours.length !== 0) {
-      let random = Math.floor(Math.random() * neighbours.length);
-      return neighbours[random];
-    } else {
-      return undefined;
-    }
-  }
-
-  that.removeWalls = function(cell1, cell2) {
-    // compares to two cells on x axis
-    let x = cell1.colNum - cell2.colNum;
-    // Removes the relevant walls if there is a different on x axis
-    if (x === 1) {
-      cell1.walls.leftWall = false;
-      cell2.walls.rightWall = false;
-    } else if (x === -1) {
-      cell1.walls.rightWall = false;
-      cell2.walls.leftWall = false;
-    }
-    // compares to two cells on x axis
-    let y = cell1.rowNum - cell2.rowNum;
-    // Removes the relevant walls if there is a different on x axis
-    if (y === 1) {
-      cell1.walls.topWall = false;
-      cell2.walls.bottomWall = false;
-    } else if (y === -1) {
-      cell1.walls.bottomWall = false;
-      cell2.walls.topWall = false;
-    }
-  }
-  return that;
-}
